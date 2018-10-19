@@ -12,7 +12,12 @@ const receips = [
 
 const InputIngredient = props => (
   <div>
-    <input type="text" value={props.value} onChange={props.onChange} />
+    <input
+      type="text"
+      className="input"
+      value={props.value}
+      onChange={props.onChange}
+    />
     <button onClick={props.onDelete}> Supprimer Ingredient </button>
   </div>
 );
@@ -22,9 +27,9 @@ class ListIng extends React.Component {
     super();
     this.state = {
       newItemInput: "",
-      listing: ["foo", "bar"],
+      listing: ["Lait", "oeuf"],
       newInputReceips: "",
-      receips: [{ name: "Yolo1", ingredients: ["eggs", "Lait"] }],
+      receips: [{ name: "Quiche", ingredients: ["eggs", "Lait"] }],
       ingredientsInputs: []
     };
   }
@@ -38,45 +43,68 @@ class ListIng extends React.Component {
     });
 
     return (
-      <div>
-        <div>
-          <div>
+      <div className="panels">
+        {/* Div Ingredients*/}
+        <div className="panel">
+          <div className="card">
             <input
               value={this.state.newItemInput}
+              className="input"
               onChange={event =>
                 this.onNewItemInputChange(event, "newItemInput")
               }
             />
-          </div>
-
-          <button onClick={this.addNewItem}>Ajouter Ingredient</button>
-          <button onClick={this.resetItem}>Reset The List </button>
-          <div>
-            <ul>
+            <button className="button" onClick={this.addNewItem}>
+              Ajouter Ingredient
+            </button>
+            <button className="button" onClick={this.resetItem}>
+              Reset The List{" "}
+            </button>
+            <ul className="list">
               {this.state.listing.map((element, index) => <li>{element}</li>)}
             </ul>
+            <div className="list">
+              {matchingReceips.map(receip => <div>{receip.name}</div>)}
+            </div>
           </div>
-          <div>{matchingReceips.map(receip => <div>{receip.name}</div>)}</div>
         </div>
         {/* Div Receips*/}
-        <div>
-          <input
-            value={this.state.newInputReceips}
-            onChange={event =>
-              this.onNewItemInputChange(event, "newInputReceips")
-            }
-          />
-          <button onClick={this.onAddReceips}> Valider un Receip</button>
-          <button onClick={this.onAddIngredient}> Ajouter Ingredient</button>
+        <div className="panel">
+          <div className="card">
+            <input
+              value={this.state.newInputReceips}
+              className="input"
+              onChange={event =>
+                this.onNewItemInputChange(event, "newInputReceips")
+              }
+            />
+            <button className="button" onClick={this.onAddReceips}>
+              {" "}
+              Valider un Receip
+            </button>
+            <button className="button" onClick={this.onAddIngredient}>
+              {" "}
+              Ajouter Ingredient
+            </button>
 
-          <div>
-            {this.state.ingredientsInputs.map((element, index) => (
-              <InputIngredient
-                value={element}
-                onChange={event => this.onIngredientInputChange(event, index)}
-                onDelete={event => this.onDeleteIngredient(index)}
-              />
-            ))}
+            <div>
+              {this.state.ingredientsInputs.map((element, index) => (
+                <InputIngredient
+                  value={element}
+                  onChange={event => this.onIngredientInputChange(event, index)}
+                  onDelete={event => this.onDeleteIngredient(index)}
+                />
+              ))}
+            </div>
+
+            <div>
+              <h1>Les Recettes Enregistrées</h1>
+              <ul>
+                {this.state.receips.map((element, index) => (
+                  <li>{element.name}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
